@@ -41,10 +41,7 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(15),
     margin: "0.5rem auto",
   },
-  rightToolbar: {
-    marginLeft: "auto",
-    marginRight: -12,
-  },
+  rightToolbar: {},
 }));
 const menuItems = [
   {
@@ -102,9 +99,21 @@ const Navbar = () => {
             <IconButton onClick={toggleMenu("left", true)}>
               <Menu style={{ color: "black" }} />
             </IconButton>
-            <Typography variant="h4" style={{ color: "black" }}>
-              Weekend Getaway On The Go{" "}
-            </Typography>
+            <Box
+              component="nav"
+              style={{ margin: "auto", textAlign: "center" }}
+            >
+              <Typography variant="h4" style={{ color: "black" }}>
+                Weekend Getaway On The Go{" "}
+                <IconButton>
+                  <AddAPhotoRounded color="black"></AddAPhotoRounded>
+                </IconButton>
+              </Typography>{" "}
+              <Typography variant="subtitle" style={{ color: "black" }}>
+                Adventure begins here
+              </Typography>
+            </Box>
+
             <Drawer
               anchor="left"
               open={menu.left}
@@ -112,12 +121,7 @@ const Navbar = () => {
             >
               {sideMenu("left")}
             </Drawer>
-            <IconButton>
-              <AddAPhotoRounded color="black"></AddAPhotoRounded>
-            </IconButton>
-            <Typography variant="subtitle" style={{ color: "black" }}>
-              Adventure begins here
-            </Typography>
+
             <section className={classes.rightToolbar}>
               <Auth />
             </section>
