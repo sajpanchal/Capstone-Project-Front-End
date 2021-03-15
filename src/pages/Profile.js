@@ -5,47 +5,68 @@ import {
   Button,
   Typography,
   Box,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Menu,
   Card,
+  IconButton,
+  TextField,
 } from "@material-ui/core";
+
+import EditIcon from "@material-ui/icons/Edit";
+import SaveIcon from "@material-ui/icons/Save";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Joi from "joi-browser";
 import { withStyles } from "@material-ui/core/styles";
+import Navbar from "../components/Navbar";
 
 const styles = () => ({
-  card: {
-    background: "#a2eba2",
-    width: "30%",
-    margin: "auto",
-    marginTop: "20px",
-    marginBottom: "20px",
-  },
   form: {
     textAlign: "center",
     paddingTop: "10px",
     paddingBottom: "10px",
+    width: "50%",
+    margin: "auto",
   },
   cardTitle: {
     textAlign: "center",
-    backgroundColor: "#3d6e3d",
-    color: "#a2eba2",
+    color: "#8ed176",
+    textAlign: "center",
+    fontStyle: "italic",
   },
   editButton: {
-    float: "inline-end",
+    textAlign: "right",
+    padding: "5px 5px 5px 5px",
   },
-  subtitles: {
-    marginTop: "15px",
+  saveButton: {
+    marginTop: "1rem",
+    color: "#8ed176",
+    borderColor: "#8ed176",
   },
-  editButton: {
-    float: "inline-end",
-  },
-  primaryButtons: {
-    marginTop: "10px",
-    width: "200px",
+  deleteButton: {
+    marginTop: "1rem",
+    color: "#fc0000",
+    borderColor: "#fc0000",
   },
 });
+const InputField = withStyles({
+  root: {
+    "& label.Mui-focused": {
+      color: "#8ed176",
+    },
+    "& label": {
+      color: "#8ed176",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#8ed176",
+      },
+      "&:hover fieldSet": {
+        borderColor: "#8ed176",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#8ed176",
+      },
+    },
+  },
+})(TextField);
 class Profile extends React.Component {
   state = {
     data: {
@@ -190,16 +211,19 @@ class Profile extends React.Component {
       }
     }
   };
-  handleInputs = (name) => {
+  handleInputs = (fname, lname) => {
     const input = { ...this.state.input };
-    input[name] = false;
+    input[fname] = false;
+    input[lname] = false;
     this.setState({ input: input });
   };
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.card}>
-        <Typography className={classes.cardTitle} variant="h4">
+      <>
+        <Navbar></Navbar>
+
+        <Typography className={classes.cardTitle} variant="h2">
           Your Profile
         </Typography>
         <Box
@@ -207,18 +231,17 @@ class Profile extends React.Component {
           component="form"
           onSubmit={this.handleSubmit}
         >
-          <Button
-            className={classes.editButton}
-            onClick={() => this.handleInputs("firstname")}
-            size="small"
-          >
-            Edit
-          </Button>
-          <br></br>
+          <Box component="div" className={classes.editButton}>
+            {" "}
+            <IconButton
+              onClick={() => this.handleInputs("firstname", "lastname")}
+            >
+              {" "}
+              <EditIcon></EditIcon>
+            </IconButton>
+          </Box>
 
-          <InputLabel className={classes.subtitles}>First Name:</InputLabel>
-          <Input
-            color="primary"
+          <InputField
             inputComponent="input"
             disabled={this.state.input.firstname}
             placeholder="Enter First Name"
@@ -226,25 +249,21 @@ class Profile extends React.Component {
             name="firstname"
             value={this.state.data.firstname}
             onChange={this.handleChange}
-          ></Input>
+            fullWidth={true}
+            label="First Name"
+            variant="standard"
+            margin="dense"
+            size="medium"
+          ></InputField>
           {this.state.errors.firstname && (
             <Typography variant="subtitle2" color="error">
               {this.state.errors.firstname}
             </Typography>
           )}
           <br></br>
-          <Button
-            className={classes.editButton}
-            size="small"
-            onClick={() => this.handleInputs("lastname")}
-          >
-            Edit
-          </Button>
           <br></br>
 
-          <InputLabel className={classes.subtitles}>Last Name:</InputLabel>
-          <Input
-            color="primary"
+          <InputField
             inputComponent="input"
             disabled={this.state.input.lastname}
             placeholder="Enter Last Name"
@@ -252,7 +271,12 @@ class Profile extends React.Component {
             name="lastname"
             value={this.state.data.lastname}
             onChange={this.handleChange}
-          ></Input>
+            fullWidth={true}
+            label="Last Name"
+            variant="standard"
+            margin="dense"
+            size="medium"
+          ></InputField>
           {this.state.errors.lastname && (
             <Typography variant="subtitle2" color="error">
               {this.state.errors.lastname}
@@ -260,16 +284,21 @@ class Profile extends React.Component {
           )}
           <br></br>
           <br></br>
-          <InputLabel className={classes.subtitles}>Username:</InputLabel>
-          <Input
-            color="primary"
+
+          <InputField
+            inputComponent="input"
             placeholder="Enter Username"
             disabled="true"
             type="text"
             name="username"
             value={this.state.data.username}
             onChange={this.handleChange}
-          ></Input>
+            fullWidth={true}
+            label="User Name"
+            variant="standard"
+            margin="dense"
+            size="medium"
+          ></InputField>
           {this.state.errors.username && (
             <Typography variant="subtitle2" color="error">
               {this.state.errors.username}
@@ -277,9 +306,8 @@ class Profile extends React.Component {
           )}
           <br></br>
           <br></br>
-          <InputLabel className={classes.subtitles}>Email:</InputLabel>
-          <Input
-            color="primary"
+
+          <InputField
             inputComponent="input"
             disabled="true"
             placeholder="Enter email"
@@ -287,85 +315,109 @@ class Profile extends React.Component {
             name="email"
             value={this.state.data.email}
             onChange={this.handleChange}
-          ></Input>
+            fullWidth={true}
+            label="Email"
+            variant="standard"
+            margin="dense"
+            size="medium"
+          ></InputField>
           {this.state.errors.email && (
             <Typography variant="subtitle2" color="error">
               {this.state.errors.email}
             </Typography>
           )}
           <br></br>
-          <Button
-            className={classes.editButton}
-            size="small"
-            onClick={() => this.handleInputs("password")}
-          >
-            Edit
-          </Button>
           <br></br>
-          <InputLabel className={classes.subtitles}>Password:</InputLabel>
-          <Input
-            color="primary"
+
+          <InputField
             placeholder="Your password"
             disabled="true"
             type="password"
             name="password"
             value={this.state.data.password}
             onChange={this.handleChange}
-          ></Input>
-
+            fullWidth={true}
+            label="Password"
+            variant="standard"
+            margin="dense"
+            size="medium"
+          ></InputField>
           <br></br>
-          <Box visibility={this.state.input.password ? "hidden" : "visible"}>
-            <Input
-              color="primary"
-              placeholder="Enter new password"
-              type="password"
-              name="newPassword"
-              value={this.state.passwordData.newPassword}
-              onChange={this.handleChange}
-            ></Input>
-            {this.state.errors.newPassword && (
-              <Typography variant="subtitle2" color="error">
-                {this.state.errors.newPassword}
-              </Typography>
-            )}
-            <br></br>
-            <Input
-              color="primary"
-              placeholder="Re-enter new password"
-              type="password"
-              name="reEnterPassword"
-              value={this.state.passwordData.reEnterPassword}
-              onChange={this.handleChange}
-            ></Input>
-            {this.state.errors.reEnterPassword && (
-              <Typography variant="subtitle2" color="error">
-                {this.state.errors.reEnterPassword}
-              </Typography>
-            )}
-          </Box>
+          {!this.state.input.password && (
+            <>
+              <InputField
+                placeholder="Enter new password"
+                type="password"
+                name="newPassword"
+                value={this.state.passwordData.newPassword}
+                onChange={this.handleChange}
+                fullWidth={true}
+                label="New Password"
+                variant="standard"
+                margin="dense"
+                size="medium"
+              ></InputField>
+              {this.state.errors.newPassword && (
+                <Typography variant="subtitle2" color="error">
+                  {this.state.errors.newPassword}
+                </Typography>
+              )}
+              <br></br>
+
+              <InputField
+                placeholder="Re-enter new password"
+                type="password"
+                name="reEnterPassword"
+                value={this.state.passwordData.reEnterPassword}
+                onChange={this.handleChange}
+                fullWidth={true}
+                label="Re-enter New Password"
+                variant="standard"
+                margin="dense"
+                size="medium"
+              ></InputField>
+              <br></br>
+            </>
+          )}
+          {this.state.errors.reEnterPassword && (
+            <Typography variant="subtitle2" color="error">
+              {this.state.errors.reEnterPassword}
+            </Typography>
+          )}
+
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => this.handleInputs("password")}
+          >
+            Change Password
+          </Button>
           <br></br>
           <br></br>
           <Button
-            className={classes.primaryButtons}
+            className={classes.saveButton}
             type="submit"
             value="submit"
-            variant="contained"
-            color="primary"
+            variant="outlined"
+            fullWidth={true}
+            endIcon={<SaveIcon></SaveIcon>}
           >
             Save Changes
           </Button>
           <br></br>
 
           <Button
-            className={classes.primaryButtons}
+            className={classes.deleteButton}
             value="delete account"
-            variant="contained"
+            variant="outlined"
+            fullWidth={true}
             color="secondary"
+            endIcon={<DeleteForeverIcon></DeleteForeverIcon>}
           >
             Delete Account
           </Button>
         </Box>
-      </Card>
+      </>
     );
   }
 }
