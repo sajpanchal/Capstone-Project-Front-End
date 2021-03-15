@@ -103,13 +103,23 @@ const Navbar = () => {
               component="nav"
               style={{ margin: "auto", textAlign: "center" }}
             >
-              <Typography variant="h4" style={{ color: "black" }}>
-                Weekend Getaway On The Go{" "}
+              <Typography
+                variant="h4"
+                style={{
+                  color: "black",
+                  fontStyle: "italic",
+                  fontWeight: "Bold",
+                }}
+              >
+                Weekend Getaway On The Go
                 <IconButton>
                   <AddAPhotoRounded color="black"></AddAPhotoRounded>
                 </IconButton>
-              </Typography>{" "}
-              <Typography variant="subtitle" style={{ color: "black" }}>
+              </Typography>
+              <Typography
+                variant="subtitle"
+                style={{ color: "black", fontStyle: "italic" }}
+              >
                 Adventure begins here
               </Typography>
             </Box>
