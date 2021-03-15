@@ -119,6 +119,8 @@ class Profile extends React.Component {
         ? Joi.validate(passwordData, this.passwordSchema)
         : null;
     // if new password is entered
+
+    console.log("input.password :", input.password);
     if (error) {
       for (let item of error.details) {
         errors[item.path[0]] = item.message;
@@ -132,11 +134,11 @@ class Profile extends React.Component {
       console.log(passwordError.error);
       this.setState({ errors: errors });
       console.log(errors);
+    } else if (errors.newPassword || errors.reEnterPassword) {
+      console.log("password error:", passwordError);
+      this.setState({ errors: errors });
     } else {
       errors = {};
-      if (input.password === false) {
-      }
-      console.log(data);
       data.password =
         input.password === false ? passwordData.reEnterPassword : data.password;
       passwordData["newPassword"] = "";
@@ -154,17 +156,16 @@ class Profile extends React.Component {
         errors: errors,
         passwordData: passwordData,
       });
-      console.log("submission sucessful");
       console.log("data:", this.state.data);
       console.log("password:", this.state.passwordData);
       console.log("errors:", this.state.errors);
+      console.log("submission sucessful");
     }
   };
   handleChange = (event) => {
-    const input = { [event.currentTarget.name]: [event.currentTarget.value] };
-    console.log(event.currentTarget.name);
-    const { data, passwordData, errors, inputs } = { ...this.state };
-
+    const inputs = { [event.currentTarget.name]: [event.currentTarget.value] };
+    console.log(inputs);
+    const { data, passwordData, errors, input } = { ...this.state };
     const schemaType =
       event.currentTarget.name === "newPassword" ||
       event.currentTarget.name === "reEnterPassword"
@@ -183,8 +184,8 @@ class Profile extends React.Component {
             ],
           };
 
-    input[event.currentTarget.name] = event.currentTarget.value;
-    const { error } = Joi.validate(input, schema);
+    inputs[event.currentTarget.name] = event.currentTarget.value;
+    const { error } = Joi.validate(inputs, schema);
 
     if (schemaType === "password") {
       passwordData[event.currentTarget.name] = event.currentTarget.value;
@@ -196,6 +197,7 @@ class Profile extends React.Component {
       // this.setState({ data: data, errors: errors });
       this.setState({ data: data });
     }
+
     if (error) {
       errors[event.currentTarget.name] = error.details[0].message;
       console.log("handle change:", error.details[0]);
@@ -203,6 +205,8 @@ class Profile extends React.Component {
       if (passwordData["newPassword"] !== passwordData["reEnterPassword"]) {
         errors["newPassword"] = "password not matching";
         errors["reEnterPassword"] = "password not matching";
+        input.password = false;
+        this.setState({ input: input });
       } else {
         errors["newPassword"] = null;
         errors["reEnterPassword"] = null;
