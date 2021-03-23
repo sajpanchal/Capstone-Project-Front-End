@@ -16,21 +16,14 @@ function App() {
       <CssBaseline />
 
       <Route exact path="/" component={Home}></Route>
-<<<<<<< HEAD
       <Route exact path="/home" component={Home}></Route>
       <Route exact path="/login" component={Login}></Route>
-      <Route exact path="/Trips" component={Trips}></Route>
+      <Route exact path="/trips" component={Trips}></Route>
       <Route exact path="/error" component={Error}></Route>
       <Route exact path="/profile" component={Profile}></Route>
       <Route exact path="/create-trip" component={Createtrip}></Route>
-=======
-      <Route exact path="/Home" component={Home}></Route>
-      <Route exact path="/TripNew" component={TripNew}></Route>
-      <Route exact path="/Error" component={Error}></Route>
-      <Route exact path="/Profile" component={Profile}></Route>
-      <Route exact path="/Createtrip" component={Createtrip}></Route>
-      <Route exact path="/Trip" component={Trip}></Route>
->>>>>>> master
+      <Route exact path="/trip" component={Trip}></Route>
+
     </>
   );
 }

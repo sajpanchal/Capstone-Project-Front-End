@@ -57,7 +57,7 @@ const menuItems = [
   {
     listIcon: <CardTravel />,
     listText: "Create Trip",
-    listPath: "/createTrip",
+    listPath: "/create-trip",
   },
   {
     listIcon: <TripOrigin />,
