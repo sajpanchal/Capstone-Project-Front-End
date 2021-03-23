@@ -43,25 +43,16 @@ export default function HomePageCard() {
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           <Box fontStyle="italic" m={1}>
-            Italic font Style.
+            Your Adventure Starts Here.
           </Box>
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. ... Lorem Ipsum is simply dummy text of the printing and
-          typesetting industry. Lorem Ipsum has been the industry's standard
-          dummy text is simply dummy text of the printing and typesetting
-          industry. ... Lorem Ipsum is simply dummy text of the printing and
-          typesetting industry. Lorem Ipsum has been the industry's standard
-          dummy text
+        <Typography variant="body2" color="textSecondary">
+          Login or Signup to begin your Road Trip planning!!!
         </Typography>
       </CardContent>
 
       <CardActions className={classes.authclass}>
         <Auth />
-        {/* <Button size="small" color="primary">
-          Learn More
-        </Button> */}
       </CardActions>
     </Card>
   );

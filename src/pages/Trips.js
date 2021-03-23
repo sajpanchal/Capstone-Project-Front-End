@@ -1,8 +1,18 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {Box,Grid,Card,CardActionArea,CardActions,CardContent,CardMedia,Button,Typography} from "@material-ui/core"
+import {
+  Box,
+  Grid,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+} from "@material-ui/core";
 import Navbar from "../components/Navbar";
-import miami from "../images/miami.jpg"
+import miami from "../images/miami.jpg";
 import vegas from "../images/vegas.jpg";
 import sanfrancisco from "../images/san-francisco.jpg";
 
@@ -17,7 +27,7 @@ const useStyles = makeStyles({
     margin: "5rem auto",
   },
 });
-const TripNew = () => {
+const Trips = () => {
   const classes = useStyles();
   return (
     <Box component="div" style={{ background: "white", height: "100vh" }}>
@@ -91,4 +101,4 @@ const TripNew = () => {
   );
 };
 
-export default TripNew;
+export default Trips;

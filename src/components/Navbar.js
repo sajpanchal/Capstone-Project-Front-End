@@ -47,22 +47,22 @@ const menuItems = [
   {
     listIcon: <Home />,
     listText: "Home",
-    listPath: "/Home",
+    listPath: "/home",
   },
   {
     listIcon: <Person />,
     listText: "Profile",
-    listPath: "/Profile",
+    listPath: "/profile",
   },
   {
     listIcon: <CardTravel />,
     listText: "Create Trip",
-    listPath: "/CreateTrip",
+    listPath: "/createTrip",
   },
   {
     listIcon: <TripOrigin />,
     listText: "Trips",
-    listPath: "/TripNew",
+    listPath: "/trips",
   },
 ];
 
@@ -113,11 +113,11 @@ const Navbar = () => {
               >
                 Weekend Getaway On The Go
                 <IconButton>
-                  <AddAPhotoRounded color="black"></AddAPhotoRounded>
+                  <AddAPhotoRounded></AddAPhotoRounded>
                 </IconButton>
               </Typography>
               <Typography
-                variant="subtitle"
+                variant="subtitle1"
                 style={{ color: "black", fontStyle: "italic" }}
               >
                 Adventure begins here

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Popup(props) {
   const classes = useStyles();
-  const { title, children, openPopup, setOpenPopup } = props;
+  const { children, openPopup, setOpenPopup } = props;
   // const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpenPopup(false);

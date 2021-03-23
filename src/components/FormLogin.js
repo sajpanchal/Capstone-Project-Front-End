@@ -40,18 +40,49 @@ const FormLogin = ({ handleChange }) => {
             </Avatar>
             <h2>Login</h2>
           </Grid>
-          <TextField
+          <form className="login-form">
+            <div className="login-text">SIGN IN</div>
+
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Username"
+              value=""
+              onChange=""
+            />
+            <br />
+
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+              value=""
+              onChange=""
+            />
+
+            <br />
+            <br />
+            <button className="form-btn">LOGIN</button>
+          </form>
+          {/* <TextField
+            type="text"
             label="Username"
-            placeholder="Enter name"
+            placeholder="Enter Username"
             fullWidth
             required
+            value={loginForm.username}
+            onChange={setLoginForm}
           />
           <TextField
+            type="password"
             label="Password"
             placeholder="Enter Password"
-            type="password"
             fullWidth
             required
+            value={loginForm.password}
+            onChange={setLoginForm}
           />
           <FormControlLabel
             control={<Checkbox name="checkedB" color="primary" />}
@@ -63,9 +94,10 @@ const FormLogin = ({ handleChange }) => {
             type="submit"
             variant="contained"
             fullWidth
+            onClick={handleLogin}
           >
             Login
-          </Button>
+          </Button> */}
           <Typography>
             <Link href="#">Forgot Password</Link>
           </Typography>

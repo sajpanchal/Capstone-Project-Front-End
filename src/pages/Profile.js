@@ -246,7 +246,7 @@ class Profile extends React.Component {
           </Box>
 
           <InputField
-            inputComponent="input"
+            // inputComponent="input"
             disabled={this.state.input.firstname}
             placeholder="Enter First Name"
             type="firstname"
@@ -268,7 +268,7 @@ class Profile extends React.Component {
           <br></br>
 
           <InputField
-            inputComponent="input"
+            // inputComponent="input"
             disabled={this.state.input.lastname}
             placeholder="Enter Last Name"
             type="lastname"
@@ -290,9 +290,9 @@ class Profile extends React.Component {
           <br></br>
 
           <InputField
-            inputComponent="input"
+            // inputComponent="input"
             placeholder="Enter Username"
-            disabled="true"
+            disabled={true}
             type="text"
             name="username"
             value={this.state.data.username}
@@ -312,8 +312,8 @@ class Profile extends React.Component {
           <br></br>
 
           <InputField
-            inputComponent="input"
-            disabled="true"
+            // inputComponent="input"
+            disabled={true}
             placeholder="Enter email"
             type="email"
             name="email"
@@ -335,7 +335,7 @@ class Profile extends React.Component {
 
           <InputField
             placeholder="Your password"
-            disabled="true"
+            disabled={true}
             type="password"
             name="password"
             value={this.state.data.password}
