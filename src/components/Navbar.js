@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Auth from "./Auth";
+import Logout from "./Logout";
 import avatar from "../images/first.jpg";
 import Drawer from "@material-ui/core/Drawer";
 import { Link } from "react-router-dom";
@@ -133,7 +134,8 @@ const Navbar = () => {
             </Drawer>
 
             <section className={classes.rightToolbar}>
-              <Auth />
+              {/*<Auth />*/}
+              <Logout></Logout>
             </section>
           </Toolbar>
         </AppBar>

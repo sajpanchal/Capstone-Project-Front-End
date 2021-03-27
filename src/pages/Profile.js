@@ -17,6 +17,8 @@ import Joi from "joi-browser";
 import { withStyles } from "@material-ui/core/styles";
 import Navbar from "../components/Navbar";
 
+import UserSession from "./../helper/UserSession";
+import { Redirect } from "react-router";
 const styles = () => ({
   form: {
     textAlign: "center",
@@ -223,6 +225,7 @@ class Profile extends React.Component {
   };
   render() {
     const { classes } = this.props;
+    if (!UserSession.getUserID()) return <Redirect to="/"></Redirect>;
     return (
       <>
         <Navbar></Navbar>

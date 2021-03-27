@@ -3,6 +3,8 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { TextField, Typography, Button, Grid, Box } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import Navbar from "../components/Navbar";
+import UserSession from "../helper/UserSession";
+import { Redirect } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -42,6 +44,7 @@ const InputField = withStyles({
 
 const Createtrip = () => {
   const classes = useStyles();
+  if (!UserSession.getUserID()) return <Redirect to="/"></Redirect>;
   return (
     <Box component="div" style={{ background: "white", height: "100vh" }}>
       <Navbar />

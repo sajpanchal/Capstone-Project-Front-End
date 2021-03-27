@@ -1,6 +1,6 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import Trips from "./pages/Trips";
@@ -23,7 +23,6 @@ function App() {
       <Route exact path="/profile" component={Profile}></Route>
       <Route exact path="/create-trip" component={Createtrip}></Route>
       <Route exact path="/trip" component={Trip}></Route>
-
     </>
   );
 }
