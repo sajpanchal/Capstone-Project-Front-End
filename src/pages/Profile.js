@@ -16,9 +16,11 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Joi from "joi-browser";
 import { withStyles } from "@material-ui/core/styles";
 import Navbar from "../components/Navbar";
-
+import jwtDecode from "jwt-decode";
 import UserSession from "./../helper/UserSession";
+import axios from "axios";
 import { Redirect } from "react-router";
+import API_BASE_URL from "../helper/base-url";
 const styles = () => ({
   form: {
     textAlign: "center",
@@ -103,13 +105,45 @@ class Profile extends React.Component {
     reEnterPassword: Joi.string().required().min(6).max(30),
   };
   componentDidMount() {
-    const data = { ...this.state.data };
+    /*
     data.firstname = "John";
     data.lastname = "Smith";
     data.username = "jsmith";
     data.email = "jsmith@gmail.com";
     data.password = "123456";
-    this.setState({ data: data });
+    this.setState({ data: data });*/
+    const data = { ...this.state.data };
+    const token = UserSession.getToken();
+
+    const { id } = token ? jwtDecode(token) : "";
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        token: UserSession.getToken(),
+      },
+    };
+    if (!id) return;
+    axios
+      .get(`${API_BASE_URL}/user/${id}`, axiosConfig)
+      .then((res) => {
+        if (res.status === 201 || res.status === 202 || res.status === 200) {
+          const { username, email, password, firstname, lastName } = res.data;
+          data.username = username;
+          data.email = email;
+          data.password = password;
+          data.firstname = firstname;
+          data.lastname = lastName;
+          this.setState({ data: data });
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        this.props.history.push("/error");
+      });
   }
   handleSubmit = (event) => {
     event.preventDefault();
@@ -217,11 +251,45 @@ class Profile extends React.Component {
       }
     }
   };
-  handleInputs = (fname, lname) => {
+  handleInputs = (inputField) => {
     const input = { ...this.state.input };
-    input[fname] = false;
-    input[lname] = false;
+    input[inputField] = false;
+
     this.setState({ input: input });
+  };
+  handleDeleteAccount = () => {
+    const token = UserSession.getToken();
+    const { id } = jwtDecode(token);
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        token: UserSession.getToken(),
+      },
+    };
+    axios
+      .delete(`${API_BASE_URL}/user/${id}`, axiosConfig)
+      .then((res) => {
+        if (res.status === 200 || res.status === 201 || res.status === 202) {
+          this.setState({
+            data: {
+              firstname: "",
+              lastname: "",
+              username: "",
+              email: "",
+              password: "",
+            },
+          });
+          alert("Success! The User Account Has been Deleted Successfully!");
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        this.props.history.push("/error");
+      });
   };
   render() {
     const { classes } = this.props;
@@ -420,6 +488,7 @@ class Profile extends React.Component {
             fullWidth={true}
             color="secondary"
             endIcon={<DeleteForeverIcon></DeleteForeverIcon>}
+            onClick={this.handleDeleteAccount}
           >
             Delete Account
           </Button>

@@ -22,7 +22,7 @@ class Logout extends Component {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
         "Access-Control-Allow-Origin": "*",
-        token: `${sessionStorage.getItem("token")}`,
+        token: UserSession.getToken(),
       },
     };
     axios

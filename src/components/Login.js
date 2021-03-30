@@ -6,6 +6,7 @@ import { Route, withRouter } from "react-router-dom";
 import Joi from "joi-browser";
 import { LockOpen } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
+import UserSession from "../helper/UserSession";
 
 const styles = () => ({
   form: {
@@ -64,6 +65,7 @@ class Login extends Component {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*",
+          token: UserSession.getToken(),
         },
       };
       axios
