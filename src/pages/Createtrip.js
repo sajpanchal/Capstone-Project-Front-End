@@ -56,8 +56,8 @@ class Createtrip extends Component {
       description: "",
       source: "",
       destination: "",
-      // startDate: Date.now().toString,
-      //  endDate: "2021-03-20",
+      startDate: "",
+      endDate: "",
       fk_organizerid: "",
     },
     errors: {
@@ -65,8 +65,14 @@ class Createtrip extends Component {
       description: "",
       source: "",
       destination: "",
+      startDate: "",
+      endDate: "",
 
       fk_organizerid: "",
+    },
+    dateFields: {
+      startDate: false,
+      endDate: false,
     },
   };
   schema = {
@@ -74,6 +80,8 @@ class Createtrip extends Component {
     description: Joi.string().required().min(1).max(100),
     source: Joi.string().required().min(1).max(30).label("Start Location"),
     destination: Joi.string().required().min(1).max(30).label("End Location"),
+    startDate: Joi.string().required(),
+    endDate: Joi.string().required(),
     fk_organizerid: Joi.string().required().min(1),
   };
   handleSubmit = (event) => {
@@ -87,7 +95,9 @@ class Createtrip extends Component {
       for (let errMsg of errMsgs.details) {
         errors[errMsg.path[0]] = errMsg.message;
       }
-      this.setState({ trip: trip, errors: errors });
+      this.setState({ trip: trip, errors: errors }, () =>
+        console.log(this.state.errors)
+      );
     } else {
       this.setState({ trip: trip, errors: errors });
       let axiosConfig = {
@@ -111,8 +121,8 @@ class Createtrip extends Component {
               description: "",
               source: "",
               destination: "",
-              //  startDate: new Date(),
-              // endDate: new Date(),
+              startDate: "",
+              endDate: "",
               fk_organizerid: "",
             },
           });
@@ -147,6 +157,14 @@ class Createtrip extends Component {
     const { error } = Joi.validate(data, schema);
     if (error) return error.details[0].message;
     else return "";
+  };
+
+  handleDateInputs = (dateInput, value) => {
+    const { dateFields } = { ...this.state };
+    dateFields[dateInput] = value;
+    this.setState({ dateFields: dateFields }, () => {
+      console.log(this.state.dateFields);
+    });
   };
   render() {
     const { classes } = this.props;
@@ -219,17 +237,23 @@ class Createtrip extends Component {
               </Typography>
             )}
             <InputField
+              onFocus={() => this.handleDateInputs("startDate", true)}
+              onBlur={() => this.handleDateInputs("startDate", false)}
               fullWidth={true}
-              type="date"
+              type={this.state.dateFields.startDate ? "date" : "text"}
               label="Start Date"
-              placeholder="DD/MM/YYYY"
               variant="standard"
               margin="dense"
               size="medium"
               name="startDate"
-              value="2021-02-02"
+              value={this.state.trip.startDate}
+              onChange={this.handleChange}
             />
-            <br />
+            {this.state.errors.startDate.length > 0 && (
+              <Typography variant="subtitle1" color="secondary">
+                Start Date is not Selected
+              </Typography>
+            )}
             <InputField
               fullWidth={true}
               label="End Location"
@@ -248,16 +272,23 @@ class Createtrip extends Component {
             )}
             <InputField
               fullWidth={true}
-              type="date"
+              onFocus={() => this.handleDateInputs("endDate", true)}
+              onBlur={() => this.handleDateInputs("endDate", false)}
+              type={this.state.dateFields.endDate ? "date" : "text"}
               label="End Date"
               placeholder="End Date"
               variant="standard"
               margin="dense"
               size="medium"
-              value="2021-01-02"
+              value={this.state.trip.endDate}
               name="endDate"
+              onChange={this.handleChange}
             />
-            <br />
+            {this.state.errors.endDate.length > 0 && (
+              <Typography variant="subtitle1" color="secondary">
+                End Date is not Selected
+              </Typography>
+            )}
             <Button
               className={classes.button}
               variant="outlined"
