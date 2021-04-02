@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Profile from "./pages/Profile";
 import Createtrip from "./pages/Createtrip";
 import Trip from "./pages/Trip";
+import CreateItinerary from "./pages/CreateItinerary";
 function App() {
   return (
     <>
@@ -22,6 +23,7 @@ function App() {
       <Route exact path="/error" component={Error}></Route>
       <Route exact path="/profile" component={Profile}></Route>
       <Route exact path="/create-trip" component={Createtrip}></Route>
+      <Route exact path="/create-itinerary" component={CreateItinerary}></Route>
       <Route exact path="/trip" component={Trip}></Route>
     </>
   );

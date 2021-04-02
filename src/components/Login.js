@@ -92,7 +92,10 @@ class Login extends Component {
         })
         .catch((err) => {
           console.error(err);
-          this.props.history.push("/error");
+          this.props.history.push({
+            pathname: "/error",
+            err: { message: err.message },
+          });
         });
     }
   };

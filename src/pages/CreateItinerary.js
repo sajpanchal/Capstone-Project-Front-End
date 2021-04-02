@@ -46,60 +46,52 @@ const InputField = withStyles({
   },
 })(TextField);
 
-class Createtrip extends Component {
+class CreateItinerary extends Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount() {
+    console.log(this.props.location.state);
+  }
   state = {
-    trip: {
+    itinerary: {
       name: "",
       description: "",
-      source: "",
-      destination: "",
-      startDate: "",
-      endDate: "",
-      fk_organizerid: "",
+      date: "",
+      fk_tripid: "",
     },
     errors: {
       name: "",
       description: "",
-      source: "",
-      destination: "",
-      startDate: "",
-      endDate: "",
-
-      fk_organizerid: "",
+      date: "",
+      fk_tripid: "",
     },
     dateFields: {
-      startDate: false,
-      endDate: false,
+      date: false,
     },
   };
   schema = {
     name: Joi.string().required().min(1).max(30).label("Title"),
     description: Joi.string().required().min(1).max(100),
-    source: Joi.string().required().min(1).max(30).label("Start Location"),
-    destination: Joi.string().required().min(1).max(30).label("End Location"),
-    startDate: Joi.string().required(),
-    endDate: Joi.string().required(),
-    fk_organizerid: Joi.string().required().min(1),
+    date: Joi.string().required(),
+    fk_tripid: Joi.string().required().min(1),
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    const { trip, errors } = { ...this.state };
+    const { itinerary, errors } = { ...this.state };
     const token = UserSession.getToken();
-    const { id } = jwtDecode(token);
-    trip.fk_organizerid = id.toString();
-    const errMsgs = this.validateSubmission(trip, this.schema);
+
+    itinerary.fk_tripid = this.props.location.state.id.toString();
+    const errMsgs = this.validateSubmission(itinerary, this.schema);
     if (errMsgs) {
       for (let errMsg of errMsgs.details) {
         errors[errMsg.path[0]] = errMsg.message;
       }
-      this.setState({ trip: trip, errors: errors }, () =>
+      this.setState({ itinerary: itinerary, errors: errors }, () =>
         console.log(this.state.errors)
       );
     } else {
-      this.setState({ trip: trip, errors: errors });
+      this.setState({ itinerary: itinerary, errors: errors });
       let axiosConfig = {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -108,26 +100,25 @@ class Createtrip extends Component {
         },
       };
       axios
-        .post(`${API_BASE_URL}/trip/create-trip`, trip, axiosConfig)
+        .post(
+          `${API_BASE_URL}/itinerary/create-itinerary`,
+          itinerary,
+          axiosConfig
+        )
         .then((res) => {
-          if (res.status === 201)
-            this.props.history.push({
-              pathname: "/create-itinerary",
-              state: { id: res.data.id },
-            });
-          else {
+          if (res.status === 201) {
+            console.log(res.data);
+            this.props.history.push("/trips");
+          } else {
             const error = new Error(res.error);
             throw error;
           }
           this.setState({
-            trip: {
+            itinerary: {
               name: "",
               description: "",
-              source: "",
-              destination: "",
-              startDate: "",
-              endDate: "",
-              fk_organizerid: "",
+              date: "",
+              fk_tripid: "",
             },
           });
         })
@@ -144,7 +135,7 @@ class Createtrip extends Component {
     else return null;
   };
   handleChange = (event) => {
-    const { trip, errors } = { ...this.state };
+    const { itinerary, errors } = { ...this.state };
     const input = { [event.currentTarget.name]: event.currentTarget.value };
     const schema = {
       [event.currentTarget.name]: this.schema[event.currentTarget.name],
@@ -154,8 +145,8 @@ class Createtrip extends Component {
     errors[event.currentTarget.name] = errMsg;
     this.setState({ errors: errors }, () => {});
 
-    trip[event.currentTarget.name] = event.currentTarget.value;
-    this.setState({ trip: trip, errors: errors }, () => {});
+    itinerary[event.currentTarget.name] = event.currentTarget.value;
+    this.setState({ itinerary: itinerary, errors: errors }, () => {});
   };
   validateInput = (data, schema) => {
     const { error } = Joi.validate(data, schema);
@@ -191,16 +182,16 @@ class Createtrip extends Component {
                 fontStyle: "italic",
               }}
             >
-              Create Trip
+              Create Itinerary
             </Typography>
             <InputField
               fullWidth={true}
-              label="Trip Title"
+              label="itinerary Title"
               variant="standard"
               margin="dense"
               size="medium"
               name="name"
-              value={this.state.trip.name}
+              value={this.state.itinerary.name}
               onChange={this.handleChange}
             />
             {this.state.errors.name.length > 0 && (
@@ -211,12 +202,12 @@ class Createtrip extends Component {
 
             <InputField
               fullWidth={true}
-              label="Trip Description"
+              label="itinerary Description"
               variant="standard"
               margin="dense"
               size="medium"
               name="description"
-              value={this.state.trip.description}
+              value={this.state.itinerary.description}
               onChange={this.handleChange}
             />
             {this.state.errors.description.length > 0 && (
@@ -224,75 +215,26 @@ class Createtrip extends Component {
                 {this.state.errors.description}
               </Typography>
             )}
+
             <InputField
+              onFocus={() => this.handleDateInputs("date", true)}
+              onBlur={() => this.handleDateInputs("date", false)}
               fullWidth={true}
-              label="Start Location"
-              placeholder="City/Province/Country"
+              type={this.state.dateFields.date ? "date" : "text"}
+              label="Date"
               variant="standard"
               margin="dense"
               size="medium"
-              name="source"
-              value={this.state.trip.source}
+              name="date"
+              value={this.state.itinerary.date}
               onChange={this.handleChange}
             />
-            {this.state.errors.source.length > 0 && (
-              <Typography variant="subtitle1" color="secondary">
-                {this.state.errors.source}
-              </Typography>
-            )}
-            <InputField
-              onFocus={() => this.handleDateInputs("startDate", true)}
-              onBlur={() => this.handleDateInputs("startDate", false)}
-              fullWidth={true}
-              type={this.state.dateFields.startDate ? "date" : "text"}
-              label="Start Date"
-              variant="standard"
-              margin="dense"
-              size="medium"
-              name="startDate"
-              value={this.state.trip.startDate}
-              onChange={this.handleChange}
-            />
-            {this.state.errors.startDate.length > 0 && (
+            {this.state.errors.date.length > 0 && (
               <Typography variant="subtitle1" color="secondary">
                 Start Date is not Selected
               </Typography>
             )}
-            <InputField
-              fullWidth={true}
-              label="End Location"
-              placeholder="City/Province/Country"
-              variant="standard"
-              margin="dense"
-              size="medium"
-              name="destination"
-              value={this.state.trip.destination}
-              onChange={this.handleChange}
-            />
-            {this.state.errors.destination.length > 0 && (
-              <Typography variant="subtitle1" color="secondary">
-                {this.state.errors.destination}
-              </Typography>
-            )}
-            <InputField
-              fullWidth={true}
-              onFocus={() => this.handleDateInputs("endDate", true)}
-              onBlur={() => this.handleDateInputs("endDate", false)}
-              type={this.state.dateFields.endDate ? "date" : "text"}
-              label="End Date"
-              placeholder="End Date"
-              variant="standard"
-              margin="dense"
-              size="medium"
-              value={this.state.trip.endDate}
-              name="endDate"
-              onChange={this.handleChange}
-            />
-            {this.state.errors.endDate.length > 0 && (
-              <Typography variant="subtitle1" color="secondary">
-                End Date is not Selected
-              </Typography>
-            )}
+
             <Button
               className={classes.button}
               variant="outlined"
@@ -300,7 +242,7 @@ class Createtrip extends Component {
               type="submit"
               endIcon={<SendIcon />}
             >
-              Create Trip
+              Create Itinerary
             </Button>
           </Box>
         </Grid>
@@ -309,4 +251,4 @@ class Createtrip extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Createtrip));
+export default withRouter(withStyles(styles)(CreateItinerary));

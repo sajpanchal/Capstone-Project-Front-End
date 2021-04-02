@@ -129,14 +129,20 @@ class Register extends Component {
               })
               .catch((err) => {
                 console.error(err);
-                this.props.history.push("/error");
+                this.props.history.push({
+                  pathname: "/error",
+                  err: { message: err.message },
+                });
               });
           } else {
           }
         })
         .catch((err) => {
           console.error(err);
-          this.props.history.push("/error");
+          this.props.history.push({
+            pathname: "/error",
+            err: { message: err.message },
+          });
         });
       console.log(this.state.user);
     }
