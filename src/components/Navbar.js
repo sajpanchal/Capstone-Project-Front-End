@@ -98,7 +98,7 @@ const Navbar = () => {
         <AppBar position="static" style={{ background: "#3d6e3d" }}>
           <Toolbar>
             <IconButton onClick={toggleMenu("left", true)}>
-              <Menu style={{ color: "black" }} />
+              <Menu style={{ color: "white" }} />
             </IconButton>
             <Box
               component="nav"
@@ -107,19 +107,21 @@ const Navbar = () => {
               <Typography
                 variant="h4"
                 style={{
-                  color: "black",
+                  color: "white",
                   fontStyle: "italic",
                   fontWeight: "Bold",
                 }}
               >
                 Weekend Getaway On The Go
                 <IconButton>
-                  <AddAPhotoRounded></AddAPhotoRounded>
+                  <AddAPhotoRounded
+                    style={{ color: "white" }}
+                  ></AddAPhotoRounded>
                 </IconButton>
               </Typography>
               <Typography
                 variant="subtitle1"
-                style={{ color: "black", fontStyle: "italic" }}
+                style={{ color: "white", fontStyle: "italic" }}
               >
                 Adventure begins here
               </Typography>

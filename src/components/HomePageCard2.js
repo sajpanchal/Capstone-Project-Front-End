@@ -34,7 +34,12 @@ const style = () => ({
   },
   cardTitle: {
     textAlign: "center",
-    padding: "20px",
+    padding: "10px",
+    backgroundColor: "black",
+    color: "white",
+  },
+  cardText: {
+    fontWeight: "Bold",
   },
 });
 class HomePageCard2 extends Component {
@@ -55,14 +60,18 @@ class HomePageCard2 extends Component {
             <>
               <Box component="div" className={classes.cardTitle}>
                 <AccountCircle fontSize="large"></AccountCircle>
-                <Typography variant="h4">Login Below!</Typography>
+                <Typography variant="h4" className={classes.cardText}>
+                  Login
+                </Typography>
               </Box>
             </>
           )}
           {this.state.signupform && (
             <Box component="div" className={classes.cardTitle}>
               <AccountCircle fontSize="large"></AccountCircle>
-              <Typography variant="h4">Register Below!</Typography>
+              <Typography variant="h4" className={classes.cardText}>
+                Register
+              </Typography>
             </Box>
           )}
           <CardContent className={classes.content}>
