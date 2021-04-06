@@ -12,6 +12,7 @@ import Createtrip from "./pages/Createtrip";
 import Trip from "./pages/Trip";
 import EditTrip from "./pages/EditTrip";
 import CreateItinerary from "./pages/CreateItinerary";
+import EditItinerary from "./pages/EditItinerary";
 function App() {
   return (
     <>
@@ -25,7 +26,8 @@ function App() {
       <Route exact path="/profile" component={Profile}></Route>
       <Route exact path="/create-trip" component={Createtrip}></Route>
       <Route exact path="/create-itinerary" component={CreateItinerary}></Route>
-      <Route exact path="/trip" component={Trip}></Route>
+      <Route exact path="/trip/:id" component={Trip}></Route>
+      <Route exact path="/edit-itinerary" component={EditItinerary}></Route>
       <Route exact path="/edit-trip/:id" component={EditTrip}></Route>
     </>
   );

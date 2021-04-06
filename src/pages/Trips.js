@@ -159,7 +159,7 @@ class Trips extends Component {
             return (
               <Grid item xs={12} sm={8} md={3} id={trip.id}>
                 <Card className={classes.cardContainer}>
-                  <CardActionArea>
+                  <CardActionArea href={`/trip/${trip.id}`}>
                     <CardMedia
                       component="img"
                       alt="Image Not Available"
