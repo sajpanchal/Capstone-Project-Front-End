@@ -10,16 +10,16 @@ import {
   CardMedia,
   Button,
   Typography,
+  IconButton,
 } from "@material-ui/core";
 import Navbar from "../components/Navbar";
-import miami from "../images/miami.jpg";
-import vegas from "../images/vegas.jpg";
-import sanfrancisco from "../images/san-francisco.jpg";
+import { Edit, DeleteForever } from "@material-ui/icons";
+
 import UserSession from "../helper/UserSession";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import API_BASE_URL from "../helper/base-url";
-
+import { Route, withRouter } from "react-router-dom";
 const styles = () => ({
   mainContainer: {
     background: "#233",
@@ -80,7 +80,75 @@ class Trips extends Component {
       alert(err.message);
     }
   }
+  handleEditTrip = (trip_id) => {
+    try {
+      const token = UserSession.getToken();
+      if (!token) {
+        alert("User is not Logged In. There are no trips to show.");
+        return;
+      }
 
+      let axiosConfig = {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          token: token,
+        },
+      };
+      axios
+        .get(`${API_BASE_URL}/trip/${trip_id}`, axiosConfig)
+        .then((res) => {
+          if (res.status === 202) {
+            console.log(res.data);
+            this.props.history.push({
+              pathname: `/edit-trip/${trip_id}`,
+              trip: res.data,
+            });
+          } else {
+            const err = new Error(res.error);
+            throw err;
+          }
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+  handleDeleteTrip = (trip_id) => {
+    try {
+      const token = UserSession.getToken();
+      if (!token) {
+        alert("User is not Logged In. There are no trips to show.");
+        return;
+      }
+
+      let axiosConfig = {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          token: token,
+        },
+      };
+      axios
+        .delete(`${API_BASE_URL}/trip/${trip_id}`, axiosConfig)
+        .then((res) => {
+          if (res.status === 202) {
+            console.log(res.data);
+            window.location.reload();
+          } else {
+            const err = new Error(res.error);
+            throw err;
+          }
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    } catch (err) {
+      alert(err.message);
+    }
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -89,12 +157,12 @@ class Trips extends Component {
         <Grid container justify="center" spacing={2}>
           {this.state.trips.map((trip) => {
             return (
-              <Grid item xs={12} sm={8} md={3}>
+              <Grid item xs={12} sm={8} md={3} id={trip.id}>
                 <Card className={classes.cardContainer}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
-                      alt="something"
+                      alt="Image Not Available"
                       height="300"
                       image={trip.name}
                     ></CardMedia>
@@ -103,79 +171,26 @@ class Trips extends Component {
                         {trip.name}
                       </Typography>
                       <Typography gutterBottom variant="h6">
-                        Created By:{trip.fk_organizerid}
+                        {trip.source} to {trip.destination}
                       </Typography>
+                      <Typography gutterBottom variant="subtitle1">
+                        {trip.startDate.substring(0, 10)} to{" "}
+                        {trip.endDate.substring(0, 10)}
+                      </Typography>
+                      <IconButton onClick={() => this.handleEditTrip(trip.id)}>
+                        <Edit></Edit>
+                      </IconButton>{" "}
+                      <IconButton
+                        onClick={() => this.handleDeleteTrip(trip.id)}
+                      >
+                        <DeleteForever color="secondary"></DeleteForever>
+                      </IconButton>{" "}
                     </CardContent>
                   </CardActionArea>
                 </Card>
               </Grid>
             );
           })}
-          {/* Dummydata1 */}
-          {/* 
-        <Grid item xs={12} sm={8} md={3}>
-          <Card className={classes.cardContainer}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                alt="something"
-                height="300"
-                image={miami}
-              ></CardMedia>
-              <CardContent>
-                <Typography gutterBottom variant="h5">
-                  Fun Trip
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Created By:Amandeep
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>*/}
-          {/* Dummydata2 */}
-          {/*
-        <Grid item xs={12} sm={8} md={3}>
-          <Card className={classes.cardContainer}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                alt="something"
-                height="300"
-                image={vegas}
-              ></CardMedia>
-              <CardContent>
-                <Typography gutterBottom variant="h5">
-                  First Trip
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Created By:Teena
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>*/}
-          {/* Dummydata3 */}
-          {/*<Grid item xs={12} sm={8} md={3}>
-          <Card className={classes.cardContainer}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                alt="something"
-                height="300"
-                image={sanfrancisco}
-              ></CardMedia>
-              <CardContent>
-                <Typography gutterBottom variant="h5">
-                  First Trip
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Created By:Saj
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-      </Grid>*/}
         </Grid>
       </Box>
     );
@@ -183,4 +198,4 @@ class Trips extends Component {
 }
 
 //export default Trips;
-export default withStyles(styles)(Trips);
+export default withRouter(withStyles(styles)(Trips));

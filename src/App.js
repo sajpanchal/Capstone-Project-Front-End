@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Profile from "./pages/Profile";
 import Createtrip from "./pages/Createtrip";
 import Trip from "./pages/Trip";
+import EditTrip from "./pages/EditTrip";
 import CreateItinerary from "./pages/CreateItinerary";
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route exact path="/create-trip" component={Createtrip}></Route>
       <Route exact path="/create-itinerary" component={CreateItinerary}></Route>
       <Route exact path="/trip" component={Trip}></Route>
+      <Route exact path="/edit-trip/:id" component={EditTrip}></Route>
     </>
   );
 }
