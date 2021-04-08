@@ -42,7 +42,10 @@ class Trips extends Component {
     try {
       const token = UserSession.getToken();
       if (!token) {
-        alert("User is not Logged In. There are no trips to show.");
+        this.props.history.push({
+          pathname: "/error",
+          err: { message: "User session has been expired" },
+        });
         return;
       }
       const { id } = jwtDecode(token);
@@ -149,6 +152,7 @@ class Trips extends Component {
       alert(err.message);
     }
   };
+
   render() {
     const { classes } = this.props;
     return (
@@ -177,16 +181,20 @@ class Trips extends Component {
                         {trip.startDate.substring(0, 10)} to{" "}
                         {trip.endDate.substring(0, 10)}
                       </Typography>
-                      <IconButton onClick={() => this.handleEditTrip(trip.id)}>
-                        <Edit></Edit>
-                      </IconButton>{" "}
-                      <IconButton
-                        onClick={() => this.handleDeleteTrip(trip.id)}
-                      >
-                        <DeleteForever color="secondary"></DeleteForever>
-                      </IconButton>{" "}
                     </CardContent>
                   </CardActionArea>
+                  <IconButton onClick={() => this.handleEditTrip(trip.id)}>
+                    <Edit fontSize="large"></Edit>
+                  </IconButton>{" "}
+                  <IconButton
+                    style={{ float: "right" }}
+                    onClick={() => this.handleDeleteTrip(trip.id)}
+                  >
+                    <DeleteForever
+                      fontSize="large"
+                      color="secondary"
+                    ></DeleteForever>
+                  </IconButton>{" "}
                 </Card>
               </Grid>
             );

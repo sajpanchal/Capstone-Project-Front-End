@@ -67,7 +67,15 @@ class Trip extends React.Component {
   componentDidMount() {
     let { timeline, itineraries } = { ...this.state };
     const token = UserSession.getToken();
+    if (!token) {
+      this.props.history.push({
+        pathname: "/error",
+        err: { message: "User session has been expired" },
+      });
+      return;
+    }
     const { id } = jwtDecode(token);
+
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

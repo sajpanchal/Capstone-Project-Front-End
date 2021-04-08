@@ -114,7 +114,13 @@ class Profile extends React.Component {
     this.setState({ data: data });*/
     const data = { ...this.state.data };
     const token = UserSession.getToken();
-
+    if (!token) {
+      this.props.history.push({
+        pathname: "/error",
+        err: { message: "User session has been expired" },
+      });
+      return;
+    }
     const { id } = token ? jwtDecode(token) : "";
     let axiosConfig = {
       headers: {

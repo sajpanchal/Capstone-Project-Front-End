@@ -84,6 +84,16 @@ class Createtrip extends Component {
     endDate: Joi.string().required(),
     fk_organizerid: Joi.string().required().min(1),
   };
+  componentDidMount() {
+    const token = UserSession.getToken();
+    if (!token) {
+      this.props.history.push({
+        pathname: "/error",
+        err: { message: "User session has been expired" },
+      });
+      return;
+    }
+  }
   handleSubmit = (event) => {
     event.preventDefault();
     const { trip, errors } = { ...this.state };

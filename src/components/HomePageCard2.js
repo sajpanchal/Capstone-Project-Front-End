@@ -15,7 +15,7 @@ const style = () => ({
     maxWidth: 900,
     width: 600,
     top: "50%",
-    left: "70%",
+    left: "50%",
     borderRadius: 10,
     position: "absolute",
     transform: "translate(-50%,-50%)",

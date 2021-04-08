@@ -27,6 +27,7 @@ import {
   Person,
   CardTravel,
 } from "@material-ui/icons";
+import UserSession from "../helper/UserSession";
 
 //Css Styles
 
@@ -46,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 const menuItems = [
   {
-    listIcon: <Home />,
+    listIcon: UserSession.getUserID() ? <TripOrigin /> : <Home />,
     listText: "Home",
-    listPath: "/home",
+    listPath: UserSession.getUserID() ? "/trips" : "/home",
   },
   {
     listIcon: <Person />,
@@ -97,9 +98,11 @@ const Navbar = () => {
       <Box component="nav">
         <AppBar position="static" style={{ background: "#3d6e3d" }}>
           <Toolbar>
-            <IconButton onClick={toggleMenu("left", true)}>
-              <Menu style={{ color: "white" }} />
-            </IconButton>
+            {UserSession.getUserID() && (
+              <IconButton onClick={toggleMenu("left", true)}>
+                <Menu style={{ color: "white" }} />
+              </IconButton>
+            )}
             <Box
               component="nav"
               style={{ margin: "auto", textAlign: "center" }}

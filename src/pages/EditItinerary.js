@@ -51,7 +51,14 @@ class EditItinerary extends Component {
     super(props);
   }
   componentDidMount() {
-    console.log(this.props.location.state);
+    const token = UserSession.getToken();
+    if (!token) {
+      this.props.history.push({
+        pathname: "/error",
+        err: { message: "User session has been expired" },
+      });
+      return;
+    }
   }
   state = {
     itinerary: {

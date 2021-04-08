@@ -87,6 +87,15 @@ class EditTrip extends Component {
   componentDidMount() {
     let { trip } = { ...this.state };
     const token = UserSession.getToken();
+
+    if (!token) {
+      this.props.history.push({
+        pathname: "/error",
+        err: { message: "User session has been expired" },
+      });
+      return;
+    }
+
     const { id } = jwtDecode(token);
     let axiosConfig = {
       headers: {
@@ -176,7 +185,12 @@ class EditTrip extends Component {
           });
         })
         .catch((err) => {
-          alert(err.message);
+          this.props.history.push({
+            pathname: "/error",
+            err: {
+              message: err.message + " " + "The Session has been expired.",
+            },
+          });
         });
     }
   };
