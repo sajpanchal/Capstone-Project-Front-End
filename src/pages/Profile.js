@@ -259,9 +259,10 @@ class Profile extends React.Component {
       }
     }
   };
-  handleInputs = (inputField) => {
+  handleInputs = (inputField1, inputField2) => {
     const input = { ...this.state.input };
-    input[inputField] = false;
+    input[inputField1] = false;
+    input[inputField2] = false;
 
     this.setState({ input: input });
   };
