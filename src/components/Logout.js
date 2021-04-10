@@ -4,6 +4,7 @@ import axios from "axios";
 import API_BASE_URL from "../helper/base-url";
 import { Route, withRouter } from "react-router-dom";
 import UserSession from "../helper/UserSession";
+import jwtDecode from "jwt-decode";
 class Logout extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +13,17 @@ class Logout extends Component {
     };
   }
   componentDidMount() {
+    const token = UserSession.getToken();
+
+    if (token) {
+      const { exp } = jwtDecode(token);
+      console.log(exp, parseInt(Date.now() / 1000));
+      if (parseInt(Date.now() / 1000) > exp) {
+        console.log(exp, parseInt(Date.now() / 1000));
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("username");
+      }
+    }
     let { isLoggedIn } = { ...this.state };
     isLoggedIn = UserSession.getUserID() ? true : false;
     this.setState({ isLoggedIn: isLoggedIn });

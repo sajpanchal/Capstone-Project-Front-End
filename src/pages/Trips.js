@@ -33,6 +33,11 @@ const styles = () => ({
 
     margin: "5rem auto",
   },
+  messageBox: {
+    marginTop: 50,
+    color: "#8ed184",
+    textAlign: "center",
+  },
 });
 class Trips extends Component {
   constructor(props) {
@@ -47,7 +52,9 @@ class Trips extends Component {
       if (!token) {
         this.props.history.push({
           pathname: "/error",
-          err: { message: "User session has been expired" },
+          err: {
+            message: "User Login session has been expired. Please login again.",
+          },
         });
         return;
       }
@@ -163,46 +170,55 @@ class Trips extends Component {
       <Box component="div" style={{ background: "white", height: "100vh" }}>
         <Navbar />
         <Grid container justify="center" spacing={2}>
-          {this.state.trips.map((trip) => {
-            return (
-              <Grid item xs={12} sm={8} md={3} id={trip.id}>
-                <Card className={classes.cardContainer}>
-                  <CardActionArea href={`/trip/${trip.id}`}>
-                    <CardMedia
-                      component="img"
-                      alt="Image Not Available"
-                      height="300"
-                      image={images[trip.id % 4]}
-                    ></CardMedia>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5">
-                        {trip.name}
-                      </Typography>
-                      <Typography gutterBottom variant="h6">
-                        {trip.source} to {trip.destination}
-                      </Typography>
-                      <Typography gutterBottom variant="subtitle1">
-                        {trip.startDate.substring(0, 10)} to{" "}
-                        {trip.endDate.substring(0, 10)}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <IconButton onClick={() => this.handleEditTrip(trip.id)}>
-                    <Edit fontSize="large"></Edit>
-                  </IconButton>{" "}
-                  <IconButton
-                    style={{ float: "right" }}
-                    onClick={() => this.handleDeleteTrip(trip.id)}
-                  >
-                    <DeleteForever
-                      fontSize="large"
-                      color="secondary"
-                    ></DeleteForever>
-                  </IconButton>{" "}
-                </Card>
-              </Grid>
-            );
-          })}
+          {this.state.trips.length > 0 ? (
+            this.state.trips.map((trip) => {
+              return (
+                <Grid item xs={12} sm={8} md={3} id={trip.id}>
+                  <Card className={classes.cardContainer}>
+                    <CardActionArea href={`/trip/${trip.id}`}>
+                      <CardMedia
+                        component="img"
+                        alt="Image Not Available"
+                        height="300"
+                        image={images[trip.id % 4]}
+                      ></CardMedia>
+                      <CardContent>
+                        <Typography gutterBottom variant="h5">
+                          {trip.name}
+                        </Typography>
+                        <Typography gutterBottom variant="h6">
+                          {trip.source} to {trip.destination}
+                        </Typography>
+                        <Typography gutterBottom variant="subtitle1">
+                          {trip.startDate.substring(0, 10)} to{" "}
+                          {trip.endDate.substring(0, 10)}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <IconButton onClick={() => this.handleEditTrip(trip.id)}>
+                      <Edit fontSize="large"></Edit>
+                    </IconButton>{" "}
+                    <IconButton
+                      style={{ float: "right" }}
+                      onClick={() => this.handleDeleteTrip(trip.id)}
+                    >
+                      <DeleteForever
+                        fontSize="large"
+                        color="secondary"
+                      ></DeleteForever>
+                    </IconButton>{" "}
+                  </Card>
+                </Grid>
+              );
+            })
+          ) : (
+            <Box component="div" className={classes.messageBox}>
+              <Typography variant="h2">No Trips Available!</Typography>
+              <Typography variant="h5" color="secondary">
+                Go to Create Trip page to add a new trip.
+              </Typography>
+            </Box>
+          )}
         </Grid>
       </Box>
     );

@@ -70,7 +70,9 @@ class Trip extends React.Component {
     if (!token) {
       this.props.history.push({
         pathname: "/error",
-        err: { message: "User session has been expired" },
+        err: {
+          message: "User Login session has been expired. Please login again.",
+        },
       });
       return;
     }
