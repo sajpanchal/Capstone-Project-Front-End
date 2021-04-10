@@ -1,0 +1,80 @@
+.leaflet-container {
+  width: 70%;
+  height: 70vh;
+
+  border-radius: 15px;
+  box-shadow: 10px 30px 41px -14px rgba(0, 0, 0, 0.36);
+  margin-left: 20px;
+}
+
+.popup-title {
+  font-size: 1.5rem;
+  font-family: "Pacifico", cursive;
+  text-align: center;
+}
+
+.popup-city {
+  margin: 5px 0 5px 0;
+}
+
+.popup-todo-text {
+  font-weight: bolder;
+}
+
+.popup-img {
+  position: relative;
+  width: 100%;
+}
+
+.popup-img img {
+  width: 90%;
+  position: relative;
+  border-radius: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 10px 30px 41px -14px rgba(0, 0, 0, 0.36);
+}
+
+.popup-component {
+  padding: 10px;
+}
+
+.leaflet-popup-content-wrapper {
+  width: 250px;
+}
+
+.leaflet-popup-content {
+  margin: 10px auto 10px auto;
+  width: 250px;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  float: left;
+}
+
+.map-timeline {
+  margin: 1rem;
+  max-height: 100%;
+  overflow-y: scroll;
+}
+
+.map-timeline::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-title {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.timeline-text {
+  font-family: "Architects Daughter", cursive;
+}
+
+.timeline-text:hover {
+  cursor: pointer;
+}

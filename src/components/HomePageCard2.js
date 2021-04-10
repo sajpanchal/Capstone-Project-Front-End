@@ -22,7 +22,7 @@ const style = () => ({
     backgroundSize: "300%",
     boxShadow: "0 3px 5px 2px rgba(255,105,135,.3)",
     transition: "0.6s",
-    backgroundImage: "linear-gradient(45deg, #8ed176 , #228c12,white)",
+    // backgroundImage: "linear-gradient(45deg, #8ed176 , #228c12,white)",
     "&:hover": {
       backgroundPostion: "right",
     },
@@ -35,7 +35,7 @@ const style = () => ({
   cardTitle: {
     textAlign: "center",
     padding: "10px",
-    backgroundColor: "black",
+    backgroundColor: "#3D6F3D",
     color: "white",
   },
   cardText: {
