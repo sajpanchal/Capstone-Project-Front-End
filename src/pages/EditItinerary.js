@@ -68,6 +68,36 @@ class EditItinerary extends Component {
       });
       return;
     }
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        token: token,
+      },
+    };
+
+    axios
+      .get(
+        `${API_BASE_URL}/itinerary/${this.props.location.state.id}`,
+        axiosConfig
+      )
+      .then((res) => {
+        if (res.status === 202) {
+          console.log(res.data);
+          const { itinerary } = { ...this.state };
+          itinerary.name = res.data.name;
+          itinerary.description = res.data.description;
+          itinerary.fk_tripid = res.data.tripid;
+
+          this.setState({ itinerary: itinerary }, () => {});
+        } else {
+          const err = new Error(res.error);
+          throw err;
+        }
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   }
   state = {
     itinerary: {
@@ -103,9 +133,7 @@ class EditItinerary extends Component {
       for (let errMsg of errMsgs.details) {
         errors[errMsg.path[0]] = errMsg.message;
       }
-      this.setState({ itinerary: itinerary, errors: errors }, () =>
-        console.log(this.state.errors)
-      );
+      this.setState({ itinerary: itinerary, errors: errors });
     } else {
       this.setState({ itinerary: itinerary, errors: errors });
       let axiosConfig = {
@@ -123,8 +151,10 @@ class EditItinerary extends Component {
         )
         .then((res) => {
           if (res.status === 201) {
-            console.log(res.data);
-            this.props.history.push("/trips");
+            console.log(res.data, this.props.location.trip_id);
+            this.props.history.push(
+              `/trip/${this.props.location.state.trip_id}`
+            );
           } else {
             const error = new Error(res.error);
             throw error;
@@ -173,9 +203,7 @@ class EditItinerary extends Component {
   handleDateInputs = (dateInput, value) => {
     const { dateFields } = { ...this.state };
     dateFields[dateInput] = value;
-    this.setState({ dateFields: dateFields }, () => {
-      console.log(this.state.dateFields);
-    });
+    this.setState({ dateFields: dateFields }, () => {});
   };
   render() {
     const { classes } = this.props;

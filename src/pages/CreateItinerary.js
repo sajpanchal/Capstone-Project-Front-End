@@ -101,9 +101,7 @@ class CreateItinerary extends Component {
       for (let errMsg of errMsgs.details) {
         errors[errMsg.path[0]] = errMsg.message;
       }
-      this.setState({ itinerary: itinerary, errors: errors }, () =>
-        console.log(this.state.errors)
-      );
+      this.setState({ itinerary: itinerary, errors: errors });
     } else {
       this.setState({ itinerary: itinerary, errors: errors });
       let axiosConfig = {
@@ -121,8 +119,7 @@ class CreateItinerary extends Component {
         )
         .then((res) => {
           if (res.status === 201) {
-            console.log(res.data);
-            this.props.history.push("/trips");
+            this.props.history.push(`/trip/${this.props.location.state.id}`);
           } else {
             const error = new Error(res.error);
             throw error;
@@ -171,9 +168,7 @@ class CreateItinerary extends Component {
   handleDateInputs = (dateInput, value) => {
     const { dateFields } = { ...this.state };
     dateFields[dateInput] = value;
-    this.setState({ dateFields: dateFields }, () => {
-      console.log(this.state.dateFields);
-    });
+    this.setState({ dateFields: dateFields }, () => {});
   };
   render() {
     const { classes } = this.props;

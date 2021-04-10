@@ -1,6 +1,7 @@
 import { Typography, Box, Button } from "@material-ui/core";
 import React from "react";
 import { Redirect } from "react-router";
+import UserSession from "../helper/UserSession";
 
 export default function (props) {
   if (!props.location.err) return <Redirect to="/"></Redirect>;
@@ -17,7 +18,7 @@ export default function (props) {
         {props.location.err.message}
         <br></br>
         <Button>
-          <a href="/home">Go Home</a>
+          <a href={UserSession.getUserID() ? "/trips" : "/home"}>Go Home</a>
         </Button>
       </Typography>
     </Box>
