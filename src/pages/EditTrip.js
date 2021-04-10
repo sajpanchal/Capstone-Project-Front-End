@@ -11,11 +11,19 @@ import API_BASE_URL from "../helper/base-url";
 import jwtDecode from "jwt-decode";
 import Joi from "joi-browser";
 const styles = () => ({
+  // form: {
+  //   top: "50%",
+  //   left: "70%",
+  //   transform: "translate(-50%,-50%)",
+  //   position: "absolute",
+  // },
+
   form: {
-    top: "50%",
-    left: "70%",
-    transform: "translate(-50%,-50%)",
-    position: "absolute",
+    textAlign: "center",
+    paddingTop: "100px",
+    paddingBottom: "10px",
+    width: "50%",
+    margin: "auto",
   },
   button: {
     marginTop: "1rem",

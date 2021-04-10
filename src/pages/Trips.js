@@ -14,7 +14,10 @@ import {
 } from "@material-ui/core";
 import Navbar from "../components/Navbar";
 import { Edit, DeleteForever } from "@material-ui/icons";
-
+import first from "../images/first.jpg";
+import second from "../images/second.jpg";
+import third from "../images/third.jpg";
+import fourth from "../images/fourth.jpg";
 import UserSession from "../helper/UserSession";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
@@ -155,6 +158,7 @@ class Trips extends Component {
 
   render() {
     const { classes } = this.props;
+    let images = [first, second, third, fourth];
     return (
       <Box component="div" style={{ background: "white", height: "100vh" }}>
         <Navbar />
@@ -168,7 +172,7 @@ class Trips extends Component {
                       component="img"
                       alt="Image Not Available"
                       height="300"
-                      image={trip.name}
+                      image={images[trip.id % 4]}
                     ></CardMedia>
                     <CardContent>
                       <Typography gutterBottom variant="h5">
