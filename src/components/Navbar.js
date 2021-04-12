@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const menuItems = [
   {
-    listIcon: UserSession.getUserID() ? <TripOrigin /> : <Home />,
+    listIcon: UserSession.getUserID() ? <Home /> : <Home />,
     listText: "Home",
     listPath: UserSession.getUserID() ? "/trips" : "/home",
   },

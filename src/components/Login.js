@@ -84,6 +84,7 @@ class Login extends Component {
               sessionStorage.setItem("token", token);
               sessionStorage.setItem("username", this.state.user.username);
               this.props.history.push("/trips");
+              window.location.reload();
             }
           } else {
             const error = new Error(res.error);

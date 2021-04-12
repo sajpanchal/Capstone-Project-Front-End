@@ -121,6 +121,7 @@ class Register extends Component {
                       this.state.user.username
                     );
                     this.props.history.push("/trips");
+                    window.location.reload();
                   }
                 } else {
                   const error = new Error(res.error);
