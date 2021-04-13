@@ -97,7 +97,12 @@ class Trips extends Component {
     try {
       const token = UserSession.getToken();
       if (!token) {
-        alert("User is not Logged In. There are no trips to show.");
+        this.props.history.push({
+          pathname: "/error",
+          err: {
+            message: "User Login session has been expired. Please login again.",
+          },
+        });
         return;
       }
 
@@ -117,23 +122,42 @@ class Trips extends Component {
               pathname: `/edit-trip/${trip_id}`,
               trip: res.data,
             });
+          } else if (res.status === 401) {
+            this.props.history.push({
+              pathname: "/error",
+              err: {
+                message:
+                  "User Login session has been expired. Please login again.",
+              },
+            });
           } else {
             const err = new Error(res.error);
             throw err;
           }
         })
         .catch((err) => {
-          alert(err.message);
+          this.props.history.push({
+            pathname: "/error",
+            err: { message: err.message },
+          });
         });
     } catch (err) {
-      alert(err.message);
+      this.props.history.push({
+        pathname: "/error",
+        err: { message: err.message },
+      });
     }
   };
   handleDeleteTrip = (trip_id) => {
     try {
       const token = UserSession.getToken();
       if (!token) {
-        alert("User is not Logged In. There are no trips to show.");
+        this.props.history.push({
+          pathname: "/error",
+          err: {
+            message: "User Login session has been expired. Please login again.",
+          },
+        });
         return;
       }
 
@@ -150,16 +174,30 @@ class Trips extends Component {
           if (res.status === 202) {
             console.log(res.data);
             window.location.reload();
+          } else if (res.status === 401) {
+            this.props.history.push({
+              pathname: "/error",
+              err: {
+                message:
+                  "User Login session has been expired. Please login again.",
+              },
+            });
           } else {
             const err = new Error(res.error);
             throw err;
           }
         })
         .catch((err) => {
-          alert(err.message);
+          this.props.history.push({
+            pathname: "/error",
+            err: { message: err.message },
+          });
         });
     } catch (err) {
-      alert(err.message);
+      this.props.history.push({
+        pathname: "/error",
+        err: { message: err.message },
+      });
     }
   };
 
